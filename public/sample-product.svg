@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120" viewBox="0 0 900 1120" role="img" aria-label="演示用太阳帽商品图">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b8d4e8"/><stop offset="1" stop-color="#edf0e8"/></linearGradient>
+    <linearGradient id="hat" x2="0" y2="1"><stop stop-color="#f4e6c8"/><stop offset="1" stop-color="#cfb993"/></linearGradient>
+    <linearGradient id="shirt" x2="0" y2="1"><stop stop-color="#697c7f"/><stop offset="1" stop-color="#283a43"/></linearGradient>
+  </defs>
+  <rect width="900" height="1120" fill="url(#sky)"/>
+  <circle cx="710" cy="180" r="90" fill="#fff7df" opacity=".72"/>
+  <path d="M0 600 Q180 480 350 590 T900 520 V1120 H0Z" fill="#90a9a5"/>
+  <path d="M0 700 Q260 565 490 690 T900 625 V1120 H0Z" fill="#6d8886"/>
+  <path d="M65 110 Q250 85 390 118" fill="none" stroke="#fff" stroke-width="16" opacity=".35"/>
+  <path d="M546 1120 Q498 835 520 570 Q547 395 673 380 Q830 386 852 567 L900 1120Z" fill="url(#shirt)"/>
+  <path d="M555 512 Q515 330 574 230 Q619 151 717 166 Q803 179 820 272 Q831 344 779 434 L775 557Z" fill="#9f6d4d"/>
+  <ellipse cx="683" cy="394" rx="120" ry="151" fill="#dba77c"/>
+  <path d="M559 361 Q545 212 654 170 Q783 134 820 276 Q750 242 684 254 Q621 266 559 361Z" fill="#6b5140"/>
+  <path d="M488 337 Q496 193 636 159 Q785 137 840 312 Q750 279 660 292 Q568 303 488 337Z" fill="url(#hat)" stroke="#bca780" stroke-width="8"/>
+  <path d="M463 333 Q643 266 860 320 Q820 399 652 414 Q523 412 463 333Z" fill="#d9c6a3" stroke="#bca780" stroke-width="9"/>
+  <path d="M561 309 Q666 256 777 292" fill="none" stroke="#b89f78" stroke-width="7"/>
+  <path d="M601 374 Q666 404 733 374" fill="none" stroke="#765743" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="715" cy="339" r="8" fill="#4a403a"/>
+  <path d="M614 464 Q677 505 746 455" fill="none" stroke="#a96852" stroke-width="7" stroke-linecap="round"/>
+  <text x="54" y="96" fill="#1c2b3d" font-family="Arial,sans-serif" font-size="42" font-weight="700" letter-spacing="3">SUMMER FIELD</text>
+  <text x="54" y="151" fill="#fff" font-family="Arial,sans-serif" font-size="24" font-weight="600" letter-spacing="2">SUN HAT · PRODUCT VISUAL</text>
+  <rect x="50" y="1010" width="800" height="70" rx="18" fill="#10141bcc"/>
+  <text x="80" y="1056" fill="#f4e6c8" font-family="Arial,sans-serif" font-size="23">UV protection  ·  Breathable comfort  ·  Wide brim</text>
+</svg>
