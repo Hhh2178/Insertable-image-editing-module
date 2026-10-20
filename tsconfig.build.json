@@ -17,5 +17,5 @@
     "noUnusedParameters": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["src/core/**/*.ts", "src/react/**/*.ts", "src/react/**/*.tsx", "src/server/**/*.ts", "src/adapters/**/*.ts", "src/vite-env.d.ts"]
+  "include": ["src/core/**/*.ts", "src/react/**/*.ts", "src/react/**/*.tsx", "src/guidance/**/*.ts", "src/guidance/**/*.tsx", "src/server/**/*.ts", "src/adapters/**/*.ts", "src/vite-env.d.ts"]
 }

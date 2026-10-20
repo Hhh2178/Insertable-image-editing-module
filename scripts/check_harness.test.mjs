@@ -7,7 +7,9 @@ function fixture() {
   files.set('package.json', JSON.stringify({ scripts: {
     'harness:check': 'node scripts/check_harness.mjs',
     'harness:test': 'node --test scripts/check_harness.test.mjs',
-    test: 'npm run test:core && npm run test:ui && npm run test:server && npm run test:adapter && npm run test:boundary',
+    test: 'npm run test:core && npm run test:ui && npm run test:server && npm run test:adapter && npm run test:guidance && npm run test:boundary',
+    'test:guidance': 'node --import tsx --test tests/guidance/*.test.ts',
+    'test:boundary': 'node scripts/check-client-boundary.mjs && node --test scripts/check-client-boundary.test.mjs',
     build: 'tsc --noEmit && vite build && npm run build:module',
     example: 'tsx examples/react-express/server.ts',
   }, exports: {
@@ -16,6 +18,9 @@ function fixture() {
     './react': { import: './dist/module/react/index.js' },
     './server': { import: './dist/module/server/index.js' },
     './adapters/apimart': { import: './dist/module/adapters/apimart/index.js' },
+    './guidance': { import: './dist/module/guidance/index.js' },
+    './guidance/react': { import: './dist/module/guidance/react/index.js' },
+    './guidance/server': { import: './dist/module/guidance/server-index.js' },
   } }));
   files.set('.gitignore', '.env\n.env.*\n!.env.example\nnode_modules/\ndist/\n');
   files.set('README.md', '[状态](liran_docs/04-开发追踪.md)\n');
@@ -25,6 +30,16 @@ function fixture() {
 
 test('valid independent Harness snapshot passes', () => {
   assert.deepEqual(validateHarnessSnapshot(fixture()), []);
+});
+
+test('Harness requires the optional guidance module public entries', () => {
+  for (const path of ['src/guidance/index.ts', 'src/guidance/server-index.ts', 'src/guidance/react/index.ts']) {
+    assert.ok(REQUIRED_FILES.includes(path), `Harness must require ${path}`);
+  }
+});
+
+test('Harness includes regression tests for both browser module entries', () => {
+  assert.ok(REQUIRED_FILES.includes('scripts/check-client-boundary.test.mjs'));
 });
 
 test('missing required document fails', () => {
