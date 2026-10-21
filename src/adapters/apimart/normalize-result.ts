@@ -2,20 +2,29 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
-function findUrl(value: unknown): string | undefined {
-  if (typeof value === 'string') return value;
+function collectUrlCandidates(value: unknown): string[] {
+  if (typeof value === 'string') return [value];
   if (Array.isArray(value)) {
-    for (const item of value) {
-      const url = findUrl(item);
-      if (url) return url;
-    }
-    return undefined;
+    // Result collections may be arrays of URLs or image records. Only inspect
+    // those documented shapes; do not recursively search arbitrary provider data.
+    return value.flatMap((item) => collectUrlCandidates(item));
   }
-  if (!isRecord(value)) return undefined;
+  if (!isRecord(value)) return [];
+
+  const urls: string[] = [];
   for (const key of ['url', 'image_url', 'imageUrl']) {
-    if (typeof value[key] === 'string') return value[key] as string;
+    const candidate = value[key];
+    if (typeof candidate === 'string') {
+      urls.push(candidate);
+    } else if (Array.isArray(candidate)) {
+      // URL-valued fields can contain a list; nested objects there are not
+      // considered URLs and must not expand the provider response search scope.
+      for (const item of candidate) {
+        if (typeof item === 'string') urls.push(item);
+      }
+    }
   }
-  return undefined;
+  return urls;
 }
 
 export function normalizeApimartImageUrl(payload: unknown): string | undefined {
@@ -30,13 +39,13 @@ export function normalizeApimartImageUrl(payload: unknown): string | undefined {
     payload.primary_url, payload.image_url, payload.imageUrl, payload.url,
   ];
   for (const candidate of candidates) {
-    const value = findUrl(candidate);
-    if (!value) continue;
-    try {
-      const url = new URL(value);
-      if ((url.protocol === 'https:' || url.protocol === 'http:') && url.hostname && !url.username && !url.password) return url.toString();
-    } catch {
-      // Ignore malformed provider output and try the remaining documented shapes.
+    for (const value of collectUrlCandidates(candidate)) {
+      try {
+        const url = new URL(value);
+        if ((url.protocol === 'https:' || url.protocol === 'http:') && url.hostname && !url.username && !url.password) return url.toString();
+      } catch {
+        // Ignore malformed provider output and try the remaining documented shapes.
+      }
     }
   }
   return undefined;

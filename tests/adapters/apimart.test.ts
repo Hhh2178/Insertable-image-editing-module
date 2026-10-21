@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { ImageEditProviderInput } from '../../src/core/types.ts';
 import { createApimartImageProvider } from '../../src/adapters/apimart/client.ts';
+import { normalizeApimartImageUrl } from '../../src/adapters/apimart/normalize-result.ts';
 import { ImageEditFailureError } from '../../src/core/errors.ts';
 
 const request: ImageEditProviderInput = {
@@ -127,4 +128,26 @@ test('stops polling at configured bounds and reports that the provider task was 
     assert.equal(error.failure.submissionState, 'submitted');
     return true;
   });
+});
+
+test('normalizes the documented nested URL array and skips unsafe candidates', () => {
+  const imageUrl = normalizeApimartImageUrl({
+    data: { result: { images: [{ url: [null, 42, 'javascript:alert(1)', 'https://cdn.example.test/valid.png'] }] } },
+  });
+  assert.equal(imageUrl, 'https://cdn.example.test/valid.png');
+});
+
+test('rejects a documented URL array when every candidate is malformed or unsafe', () => {
+  const imageUrl = normalizeApimartImageUrl({
+    data: { result: { images: [{ url: ['javascript:alert(1)', 'https://user:pass@cdn.example.test/image.png', 'not-a-url'] }] } },
+  });
+  assert.equal(imageUrl, undefined);
+  assert.equal(normalizeApimartImageUrl({ data: { result: { images: [{ url: [] }] } } }), undefined);
+});
+
+test('does not recursively treat URLs in unknown provider fields as generated results', () => {
+  const imageUrl = normalizeApimartImageUrl({
+    data: { result: { debug: { images: [{ url: 'https://cdn.example.test/not-a-result.png' }] } } },
+  });
+  assert.equal(imageUrl, undefined);
 });
