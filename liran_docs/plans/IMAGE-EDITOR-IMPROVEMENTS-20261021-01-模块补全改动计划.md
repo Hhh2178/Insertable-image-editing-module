@@ -45,7 +45,7 @@ P0 是优先级，不代表 A–D 属于一次性发布或一次验收。首批�
 
 只有后续批次的正式合同和执行范围确认后才开工。B/C/D 可先完成公共合同讨论，但不能借 A 的授权实施它们；旧记录缺失能力或供应商不支持时应明确限制，不以承诺补齐假事实。
 
-批次 A 的需求整理、正式 PRD、评分与转换审计见[批次 A 文档](../requirements/IMAGE-EDITOR-IMPROVEMENTS-20261021-01-A-PRD.md)。PRD 已确认；结果解析实现、回归测试、构建、Harness 与 tarball 消费 smoke 均已通过，等待独立提交和推送。批次 A 结束后停止，B–G 仍锁定。
+批次 A 的需求整理、正式 PRD、评分与转换审计见[批次 A 文档](../requirements/IMAGE-EDITOR-IMPROVEMENTS-20261021-01-A-PRD.md)。PRD 已确认；结果解析实现、回归测试、构建、Harness 与 tarball 消费 smoke 均已通过。提交 `6895dbd` 已推送至 `origin/main`；批次 A 结束后停止，B–G 仍锁定。
 
 ## 4. 批次 A：仅修复结果解析
 
